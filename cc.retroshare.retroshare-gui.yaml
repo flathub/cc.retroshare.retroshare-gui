@@ -9,7 +9,11 @@ finish-args:
   - --socket=wayland
   - --socket=x11
   - --share=network
-  - --persist=.retroshare
+  - --talk-name=org.kde.StatusNotifierWatcher
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=com.canonical.Unity
+  - --persist=~/.retroshare
+  - --filesystem=host
 build-options:
   no-debuginfo: true
   strip: false
@@ -91,6 +95,8 @@ modules:
     sha256: e6d78eb5fb1dcc179f561cbe4934ef6f242a97be966e00c0a6d0bcde7e034183
   - type: file
     path: cc.retroshare.retroshare-gui.appdata.xml
+  - type: patch
+    path: 0001-adapt-desktop-file.patch
   # remove the PATCHED_LIBUPNP define, this is somehow not detected properly
   - type: shell
     commands:
