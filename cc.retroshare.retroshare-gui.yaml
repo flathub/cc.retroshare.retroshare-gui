@@ -11,6 +11,7 @@ finish-args:
   - --share=network
   - --talk-name=org.kde.StatusNotifierWatcher
   - --persist=.retroshare
+  - --filesystem=host
 build-options:
   no-debuginfo: true
   strip: false
