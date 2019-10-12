@@ -10,8 +10,6 @@ finish-args:
   - --socket=x11
   - --share=network
   - --talk-name=org.kde.StatusNotifierWatcher
-  - --talk-name=org.freedesktop.Notifications
-  - --talk-name=com.canonical.Unity
   - --persist=.retroshare
 build-options:
   no-debuginfo: true
