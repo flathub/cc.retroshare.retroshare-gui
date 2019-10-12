@@ -10,6 +10,7 @@ finish-args:
   - --socket=x11
   - --share=network
   - --persist=.retroshare
+  - --filesystem=host
 build-options:
   no-debuginfo: true
   strip: false
