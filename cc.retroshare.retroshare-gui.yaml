@@ -74,6 +74,22 @@ modules:
     url: https://ftp.gnu.org/gnu/libmicrohttpd/libmicrohttpd-0.9.63.tar.gz
     sha256: 37c36f1be177f0e37ef181a645cd3baac1000bd322a01c2eff70f3cc8c91749c
 
+# tor dep
+- name: libevent
+  buildsystem: autotools
+  sources:
+  - type: archive
+    url: https://github.com/libevent/libevent/releases/download/release-2.1.11-stable/libevent-2.1.11-stable.tar.gz
+    sha256: a65bac6202ea8c5609fd5c7e480e6d25de467ea1917c08290c521752f147283d
+
+# retroshare dep
+- name: tor
+  buildsystem: autotools
+  sources:
+  - type: archive
+    url: https://dist.torproject.org/tor-0.4.2.7.tar.gz
+    sha256: 06a1d835ddf382f6bca40a62e8fb40b71b2f73d56f0d53523c8bd5caf9b3026d
+
 - name: retroshare-gui
   buildsystem: qmake
   config-opts:
