@@ -32,6 +32,7 @@
   <url type="homepage">http://retroshare.cc/</url>
   <updatecontact>contact_at_retroshare.cc</updatecontact>
   <releases>
+    <release date="2021-03-23" version="0.6.6"/>
     <release date="2019-02-12" version="0.6.5"/>
   </releases>
   <content_rating type="oars-1.1">
