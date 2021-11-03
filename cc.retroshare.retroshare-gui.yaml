@@ -59,20 +59,20 @@ modules:
   - /bin
 
 # retroshare dep
-- name: libupnp
-  buildsystem: autotools
+- name: miniupnpc
+  buildsystem: cmake-ninja
+  config-opts:
+    - -DUPNPC_BUILD_STATIC=FALSE
+    - -DUPNPC_BUILD_SHARED=TRUE
+    - -DUPNPC_BUILD_TESTS=FALSE
+    - -DUPNPC_BUILD_SAMPLE=FALSE
+  cleanup:
+    - /include
+    - /share/doc
   sources:
-  - type: archive
-    url: https://downloads.sourceforge.net/sourceforge/pupnp/libupnp-1.14.3.tar.bz2
-    sha256: 7140a712de055c7c9b3438c48e0ccaecb4760a496f0979f9e2ef3e7442da4502
-
-# retroshare dep
-- name: microhttpd
-  buildsystem: autotools
-  sources:
-  - type: archive
-    url: https://ftp.gnu.org/gnu/libmicrohttpd/libmicrohttpd-0.9.73.tar.gz
-    sha256: a37b2f1b88fd1bfe74109586be463a434d34e773530fc2a74364cfcf734c032e
+    - type: archive
+      url: http://miniupnp.free.fr/files/miniupnpc-2.1.20190625.tar.gz
+      sha256: 8723f5d7fd7970de23635547700878cd29a5c2bb708b5e5475b2d1d2510317fb
 
 # tor dep
 - name: libevent
@@ -110,6 +110,7 @@ modules:
   config-opts:
     - CONFIG-=debug
     - CONFIG+=release
+    - RS_UPNP_LIB=miniupnpc
   build-options:
     arch:
       aarch64:
@@ -117,6 +118,7 @@ modules:
           - CONFIG-=debug
           - CONFIG+=release
           - CONFIG+=no_sqlcipher
+          - RS_UPNP_LIB=miniupnpc
   sources:
   - type: git
     url: https://github.com/RetroShare/RetroShare.git
@@ -126,12 +128,6 @@ modules:
     path: cc.retroshare.retroshare-gui.appdata.xml
   - type: patch
     path: 0001-adapt-desktop-file.patch
- # - type: patch
- #   path: patch.patch
-  # remove the PATCHED_LIBUPNP define, this is somehow not detected properly
-  - type: shell
-    commands:
-    - sed -i '/PATCHED_LIBUPNP/d' ./libretroshare/src/libretroshare.pro
   - type: shell
     commands:
       - install -Dm644 cc.retroshare.retroshare-gui.appdata.xml /app/share/appdata/cc.retroshare.retroshare-gui.appdata.xml
