@@ -1,6 +1,6 @@
 app-id: cc.retroshare.retroshare-gui
 runtime: org.kde.Platform
-runtime-version: "5.12"
+runtime-version: "5.15"
 sdk: org.kde.Sdk
 command: retroshare
 finish-args:
@@ -10,6 +10,7 @@ finish-args:
   - --socket=x11
   - --share=network
   - --filesystem=host
+  - --talk-name=org.kde.StatusNotifierWatcher
 build-options:
   no-debuginfo: true
   strip: false
@@ -33,8 +34,8 @@ modules:
   subdir: unix
   sources:
   - type: archive
-    url: https://prdownloads.sourceforge.net/tcl/tcl8.6.9-src.tar.gz
-    sha256: ad0cd2de2c87b9ba8086b43957a0de3eb2eb565c7159d5f53ccbba3feb915f4e
+    url: https://sourceforge.net/projects/tcl/files/Tcl/8.6.11/tcl8.6.11-src.tar.gz
+    sha256: 8c0486668586672c5693d7d95817cb05a18c5ecca2f40e2836b9578064088258
   cleanup:
   - /bin
   - /lib
@@ -52,32 +53,64 @@ modules:
     ldflags: -lcrypto
   sources:
   - type: archive
-    url: https://github.com/sqlcipher/sqlcipher/archive/v4.0.1.tar.gz
-    sha256: 2f803017378c7479cb791be59b7bad8392a15acddbcc094e4433581fe421f4ca
+    url: https://github.com/sqlcipher/sqlcipher/archive/v4.4.3.tar.gz
+    sha256: b8df69b998c042ce7f8a99f07cf11f45dfebe51110ef92de95f1728358853133
   cleanup:
   - /bin
 
 # retroshare dep
-- name: libupnp
+- name: miniupnpc
+  buildsystem: cmake-ninja
+  config-opts:
+    - -DUPNPC_BUILD_STATIC=FALSE
+    - -DUPNPC_BUILD_SHARED=TRUE
+    - -DUPNPC_BUILD_TESTS=FALSE
+    - -DUPNPC_BUILD_SAMPLE=FALSE
+  cleanup:
+    - /include
+    - /share/doc
+  sources:
+    - type: archive
+      url: http://miniupnp.free.fr/files/miniupnpc-2.1.20190625.tar.gz
+      sha256: 8723f5d7fd7970de23635547700878cd29a5c2bb708b5e5475b2d1d2510317fb
+
+# tor dep
+- name: libevent
   buildsystem: autotools
   sources:
   - type: archive
-    url: https://downloads.sourceforge.net/sourceforge/pupnp/libupnp-1.6.25.tar.bz2
-    sha256: c5a300b86775435c076d58a79cc0d5a977d76027d2a7d721590729b7f369fa43
+    url: https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz
+    sha256: 92e6de1be9ec176428fd2367677e61ceffc2ee1cb119035037a27d346b0403bb
 
 # retroshare dep
-- name: microhttpd
+- name: tor
   buildsystem: autotools
   sources:
   - type: archive
-    url: https://ftp.gnu.org/gnu/libmicrohttpd/libmicrohttpd-0.9.63.tar.gz
-    sha256: 37c36f1be177f0e37ef181a645cd3baac1000bd322a01c2eff70f3cc8c91749c
+    url: https://dist.torproject.org/tor-0.4.6.5.tar.gz
+    sha256: 7b6d354e0d9791eace4b51e92211909308297b7aa257993937163d7ee0694cf9
 
+# retroshare dep
+- name: rapidjson
+  buildsystem: cmake-ninja
+  config-opts:
+    - -DRAPIDJSON_BUILD_DOC=OFF
+    - -DRAPIDJSON_BUILD_EXAMPLES=OFF
+    - -DRAPIDJSON_BUILD_TESTS=OFF
+  cleanup:
+    - /include
+    - /share/doc
+  sources:
+    - type: archive
+      url: https://github.com/Tencent/rapidjson/archive/v1.1.0.tar.gz
+      sha256: bf7ced29704a1e696fbccf2a2b4ea068e7774fa37f6d7dd4039d0787f8bed98e
+    
 - name: retroshare-gui
   buildsystem: qmake
   config-opts:
     - CONFIG-=debug
     - CONFIG+=release
+    - RS_UPNP_LIB=miniupnpc
   build-options:
     arch:
       aarch64:
@@ -85,16 +118,16 @@ modules:
           - CONFIG-=debug
           - CONFIG+=release
           - CONFIG+=no_sqlcipher
+          - RS_UPNP_LIB=miniupnpc
   sources:
-  - type: archive
-    url: https://github.com/RetroShare/RetroShare/archive/v0.6.5.zip
-    sha256: e6d78eb5fb1dcc179f561cbe4934ef6f242a97be966e00c0a6d0bcde7e034183
+  - type: git
+    url: https://github.com/RetroShare/RetroShare.git
+    tag: v0.6.6
+    commit: 751fffc30f957425b1581c3aefaacf1959a8869f
   - type: file
     path: cc.retroshare.retroshare-gui.appdata.xml
-  # remove the PATCHED_LIBUPNP define, this is somehow not detected properly
-  - type: shell
-    commands:
-    - sed -i '/PATCHED_LIBUPNP/d' ./libretroshare/src/libretroshare.pro
+  - type: patch
+    path: 0001-adapt-desktop-file.patch
   - type: shell
     commands:
       - install -Dm644 cc.retroshare.retroshare-gui.appdata.xml /app/share/appdata/cc.retroshare.retroshare-gui.appdata.xml
