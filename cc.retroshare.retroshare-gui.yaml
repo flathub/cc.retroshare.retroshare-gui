@@ -1,6 +1,6 @@
 app-id: cc.retroshare.retroshare-gui
 runtime: org.kde.Platform
-runtime-version: "5.15"
+runtime-version: "5.15-24.08"
 sdk: org.kde.Sdk
 command: retroshare
 finish-args:
@@ -123,8 +123,8 @@ modules:
   sources:
   - type: git
     url: https://github.com/RetroShare/RetroShare.git
-    tag: v0.6.6
-    commit: 751fffc30f957425b1581c3aefaacf1959a8869f
+    tag: v0.6.7.2
+    commit: 463a25a0486557b133115147ec25e59ae59e476c
   - type: file
     path: cc.retroshare.retroshare-gui.appdata.xml
   - type: patch

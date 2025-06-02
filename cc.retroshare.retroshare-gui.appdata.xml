@@ -37,6 +37,15 @@
   <url type="contribute">https://github.com/RetroShare</url>
   <url type="homepage">https://retroshare.cc/</url>
   <releases>
+    <release date="2023-11-28" version="0.6.7.2">
+      <description>
+      <p>Release description</p>
+        <ul>
+          <li>New stuff and a lot of bug fixes.</li>
+          <li>New Tor version.</li>
+        </ul>
+      </description>
+    </release>
     <release date="2021-03-23" version="0.6.6"/>
     <release date="2019-02-12" version="0.6.5"/>
   </releases>
