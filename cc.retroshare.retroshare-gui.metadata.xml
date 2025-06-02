@@ -3,7 +3,9 @@
 <component type="desktop-application">
   <id>cc.retroshare.retroshare-gui</id>
   <metadata_license>FSFAP</metadata_license>
-  <developer_name>Cyril Soler</developer_name>
+  <developer id="cc.retroshare">
+    <name>Cyril Soler</name>
+  </developer>
   <project_license>AGPL-3.0-only and LGPL-3.0-or-later and GPL-3.0-or-later</project_license>
   <name>RetroShare-gui</name>
   <summary>Secure communication for everyone</summary>
@@ -31,7 +33,8 @@
   <kudos>
     <kudo>ModernToolkit</kudo>
   </kudos>
-  <url type="homepage">http://retroshare.cc/</url>
+  <url type="contribute">https://github.com/RetroShare</url>
+  <url type="homepage">https://retroshare.cc/</url>
   <updatecontact>contact_at_retroshare.cc</updatecontact>
   <releases>
     <release date="2021-03-23" version="0.6.6"/>
