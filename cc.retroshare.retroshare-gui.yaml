@@ -130,4 +130,4 @@ modules:
     path: 0001-adapt-desktop-file.patch
   - type: shell
     commands:
-      - install -Dm644 cc.retroshare.retroshare-gui.appdata.xml /app/share/appdata/cc.retroshare.retroshare-gui.appdata.xml
+      - install -Dm644 cc.retroshare.retroshare-gui.metadata.xml /app/share/metainfo/cc.retroshare.retroshare-gui.metadata.xml
