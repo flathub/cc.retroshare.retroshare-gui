@@ -54,8 +54,8 @@ modules:
     ldflags: -lcrypto
   sources:
   - type: archive
-    url: https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.9.0.tar.gz
-    sha256: 91936630ce58a9979de3136bd5292535ee0c0b2d8e901c483335ac4fb2be4185
+    url: https://github.com/sqlcipher/sqlcipher/archive/v4.4.3.tar.gz
+    sha256: b8df69b998c042ce7f8a99f07cf11f45dfebe51110ef92de95f1728358853133
   cleanup:
   - /bin
 
