@@ -111,7 +111,6 @@ modules:
   config-opts:
     - CONFIG-=debug
     - CONFIG+=release
-    - CONFIG+=no_sqlcipher
     - RS_UPNP_LIB=miniupnpc
   build-options:
     arch:
