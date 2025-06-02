@@ -29,6 +29,11 @@ rename-icon: retroshare
 
 modules:
 
+- name: install_metainfo
+  buildsystem: metainfo
+  build-commands:
+    - install -Dm644 ${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
+
 # sqlcipher build dep
 - name: tcl
   buildsystem: autotools
@@ -108,8 +113,6 @@ modules:
     
 - name: retroshare-gui
   buildsystem: qmake
-  build-commands:
-    - install -Dm644 ${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
   config-opts:
     - CONFIG-=debug
     - CONFIG+=release
