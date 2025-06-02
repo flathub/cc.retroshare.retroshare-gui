@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2025 RetroShare -->
 <component type="desktop-application">
   <id>cc.retroshare.retroshare-gui</id>
   <metadata_license>FSFAP</metadata_license>
+  <developer_name>Cyril Soler</developer_name>
   <project_license>AGPL-3.0-only and LGPL-3.0-or-later and GPL-3.0-or-later</project_license>
   <name>RetroShare-gui</name>
   <summary>Secure communication for everyone</summary>
