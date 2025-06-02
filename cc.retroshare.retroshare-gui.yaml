@@ -30,7 +30,7 @@ rename-icon: retroshare
 modules:
 
 - name: install_metainfo
-  buildsystem: metainfo
+  buildsystem: simple
   build-commands:
     - install -Dm644 ${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
 
