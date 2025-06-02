@@ -108,6 +108,8 @@ modules:
     
 - name: retroshare-gui
   buildsystem: qmake
+  build-commands:
+    - install -Dm644 ${FLATPAK_ID}.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
   config-opts:
     - CONFIG-=debug
     - CONFIG+=release
@@ -125,10 +127,5 @@ modules:
     url: https://github.com/RetroShare/RetroShare.git
     tag: v0.6.6
     commit: 751fffc30f957425b1581c3aefaacf1959a8869f
-  - type: file
-    path: cc.retroshare.retroshare-gui.metadata.xml
   - type: patch
     path: 0001-adapt-desktop-file.patch
-  - type: shell
-    commands:
-      - install -Dm644 cc.retroshare.retroshare-gui.metadata.xml /app/share/metainfo/cc.retroshare.retroshare-gui.metadata.xml
