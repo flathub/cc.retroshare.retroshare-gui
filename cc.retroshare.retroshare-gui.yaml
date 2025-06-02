@@ -8,6 +8,7 @@ finish-args:
   - --socket=pulseaudio
   - --socket=wayland
   - --socket=fallback-x11
+  - --share=ipc
   - --share=network
   - --filesystem=host
   - --talk-name=org.kde.StatusNotifierWatcher
