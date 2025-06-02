@@ -87,8 +87,8 @@ modules:
   buildsystem: autotools
   sources:
   - type: archive
-    url: https://dist.torproject.org/tor-0.4.6.5.tar.gz
-    sha256: 7b6d354e0d9791eace4b51e92211909308297b7aa257993937163d7ee0694cf9
+    url: https://dist.torproject.org/tor-0.4.8.9.tar.gz
+    sha256: 59bb7d8890f6131b4ce5344f3dcea5deb2182b7f4f10ff0cb4e4d81f11b2cf65
 
 # retroshare dep
 - name: rapidjson
