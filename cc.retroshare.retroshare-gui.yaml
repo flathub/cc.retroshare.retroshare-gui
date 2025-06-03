@@ -49,10 +49,11 @@ modules:
   config-opts:
     - --with-tempstore=yes
     - --disable-tcl
-    - -DSQLITE_EXTRA_INIT=sqlcipher_extra_init
-    - -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown
   build-options:
-    cflags: -DSQLITE_HAS_CODEC
+    cflags:
+      -DSQLITE_HAS_CODEC
+      -DSQLITE_EXTRA_INIT=sqlcipher_extra_init
+      -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown
     ldflags: -lcrypto
   sources:
   - type: archive
