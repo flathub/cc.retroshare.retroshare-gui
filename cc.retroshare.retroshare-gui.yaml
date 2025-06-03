@@ -47,8 +47,8 @@ modules:
     - aarch64
   buildsystem: autotools
   config-opts:
-  - --enable-tempstore=yes
-  - --disable-tcl
+    - --enable-tempstore=yes
+    - --disable-tcl
   build-options:
     cflags: -DSQLITE_HAS_CODEC
     ldflags: -lcrypto
