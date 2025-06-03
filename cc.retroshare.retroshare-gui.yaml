@@ -34,12 +34,12 @@ modules:
   buildsystem: autotools
   subdir: unix
   sources:
-  - type: archive
-    url: https://sourceforge.net/projects/tcl/files/Tcl/8.6.16/tcl8.6.16-src.tar.gz
-    sha256: 91cb8fa61771c63c262efb553059b7c7ad6757afa5857af6265e4b0bdc2a14a5
+    - type: archive
+      url: https://sourceforge.net/projects/tcl/files/Tcl/8.6.16/tcl8.6.16-src.tar.gz
+      sha256: 91cb8fa61771c63c262efb553059b7c7ad6757afa5857af6265e4b0bdc2a14a5
   cleanup:
-  - /bin
-  - /lib
+    - /bin
+    - /lib
 
 # retroshare dep
 - name: sqlcipher
@@ -54,17 +54,14 @@ modules:
       -DSQLITE_HAS_CODEC
       -DSQLITE_EXTRA_INIT=sqlcipher_extra_init
       -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown
+      -SQLITE_THREADSAFE=1
     ldflags: -lcrypto
   sources:
-  - type: archive
-    url: https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.9.0.tar.gz
-    sha256: 91936630ce58a9979de3136bd5292535ee0c0b2d8e901c483335ac4fb2be4185
-  dependencies:
-    - name: libsqlcipher-dev
-      type: library
-      version: 3.4.1-2
+    - type: archive
+      url: https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.9.0.tar.gz
+      sha256: 91936630ce58a9979de3136bd5292535ee0c0b2d8e901c483335ac4fb2be4185
   cleanup:
-  - /bin
+    - /bin
 
 # retroshare dep
 - name: miniupnpc
@@ -86,17 +83,17 @@ modules:
 - name: libevent
   buildsystem: autotools
   sources:
-  - type: archive
-    url: https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz
-    sha256: 92e6de1be9ec176428fd2367677e61ceffc2ee1cb119035037a27d346b0403bb
+    - type: archive
+      url: https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz
+      sha256: 92e6de1be9ec176428fd2367677e61ceffc2ee1cb119035037a27d346b0403bb
 
 # retroshare dep
 - name: tor
   buildsystem: autotools
   sources:
-  - type: archive
-    url: https://dist.torproject.org/tor-0.4.8.9.tar.gz
-    sha256: 59bb7d8890f6131b4ce5344f3dcea5deb2182b7f4f10ff0cb4e4d81f11b2cf65
+    - type: archive
+      url: https://dist.torproject.org/tor-0.4.8.9.tar.gz
+      sha256: 59bb7d8890f6131b4ce5344f3dcea5deb2182b7f4f10ff0cb4e4d81f11b2cf65
 
 # retroshare dep
 - name: rapidjson
