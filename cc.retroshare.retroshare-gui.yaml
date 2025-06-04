@@ -57,9 +57,9 @@ modules:
         -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown
         -SQLITE_THREADSAFE=1
       ldflags: -lcrypto
-    dependencies:
-      - name: tcl
-        type: library
+#    dependencies:
+#      - name: tcl
+#        type: library
     sources:
       - type: archive
         url: https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.9.0.tar.gz
@@ -89,14 +89,14 @@ modules:
     sources:
       - type: archive
         url: https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz
-        sha256: 92e6de1be9ec176428fd2367677e61ceffc2ee1cb119035037a27d346b0403bb
+        sha2#56: 92e6de1be9ec176428fd2367677e61ceffc2ee1cb119035037a27d346b0403bb
 
-  # retroshare dep
-  - name: tor
-    buildsystem: autotools
-    dependencies:
-      - name: libevent
-        type: library
+  # retr#oshare dep
+  - name#: tor
+    buil#dsystem: autotools
+#    dependencies:
+#      - name: libevent
+#        type: library
     sources:
       - type: archive
         url: https://dist.torproject.org/tor-0.4.8.9.tar.gz
@@ -131,15 +131,15 @@ modules:
             - CONFIG+=release
             - CONFIG+=no_sqlcipher
             - RS_UPNP_LIB=miniupnpc
-    dependencies:
-      - name: miniupnpc
-        type: library
-      - name: rapidjson
-        type: library
-      - name: sqlcipher
-        type: library
-      - name: tor
-        type: library
+#    dependencies:
+#      - name: miniupnpc
+#        type: library
+#      - name: rapidjson
+#        type: library
+#      - name: sqlcipher
+#        type: library
+#      - name: tor
+#        type: library
   #      version: v4.9.0
     sources:
     - type: git
