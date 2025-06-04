@@ -120,12 +120,31 @@ modules:
       - type: archive
         url: https://github.com/Tencent/rapidjson/archive/refs/heads/master.zip
         sha256: 45657e20a02417e4d874a7861c7e3fc00cd03f83344bd20f4c894483a7336b4c
-      
+
+  # retroshare dependeny for autologin
+  - name:
+    - shared-modules/libsecret/libsecret-0.21.6
+
+  # retroshare dependeny for autologin
+  - name: qtkeychain
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/frankosterfeld/qtkeychain.git
+        tag: '0.15.0'
+    config-opts:
+      - -DBUILD_SHARED_LIBS=OFF
+      - -DBUILD_TEST_APPLICATION=OFF
+
   - name: retroshare-gui
     buildsystem: qmake
     config-opts:
       - CONFIG-=debug
       - CONFIG+=release
+      - CONFIG+=rs_efs
+      - CONFIG+=rs_autologin
+      - CONFIG+=rs_jsonapi
+      - CONFIG+=rs_webui
       - RS_UPNP_LIB=miniupnpc
     build-options:
       arch:
