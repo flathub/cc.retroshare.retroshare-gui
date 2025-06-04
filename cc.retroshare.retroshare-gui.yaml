@@ -48,7 +48,7 @@ modules:
     config-opts:
       - --with-tempstore=yes
       - --disable-tcl
-      - --enable-shared
+#      - --enable-shared
 #      - --enable-static
     build-options:
       cflags:
