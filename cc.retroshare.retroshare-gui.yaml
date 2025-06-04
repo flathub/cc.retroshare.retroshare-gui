@@ -48,6 +48,8 @@ modules:
     config-opts:
       - --with-tempstore=yes
       - --disable-tcl
+      - --enable-shared
+      - --enable-static
     build-options:
       cflags:
         -DSQLITE_HAS_CODEC
