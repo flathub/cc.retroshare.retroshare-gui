@@ -49,7 +49,7 @@ modules:
       - --with-tempstore=yes
       - --disable-tcl
       - --enable-shared
-      - --enable-static
+#      - --enable-static
     build-options:
       cflags:
         -DSQLITE_HAS_CODEC
