@@ -4,7 +4,7 @@
   <id>cc.retroshare.retroshare-gui</id>
   <metadata_license>FSFAP</metadata_license>
   <developer id="cc.retroshare">
-    <name>Cyril Soler</name>
+    <name>RetroShare Development Team retroshare.project@gmail.com</name>
   </developer>
   <project_license>AGPL-3.0-only and LGPL-3.0-or-later and GPL-3.0-or-later</project_license>
   <name>RetroShare-gui</name>
@@ -37,6 +37,7 @@
   <url type="contribute">https://github.com/RetroShare</url>
   <url type="homepage">https://retroshare.cc/</url>
   <releases>
+    <release date="2025-06-04" version="0.6.6.1"/>
     <release date="2021-03-23" version="0.6.6"/>
     <release date="2019-02-12" version="0.6.5"/>
   </releases>
