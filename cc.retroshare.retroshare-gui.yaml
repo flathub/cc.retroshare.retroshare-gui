@@ -53,17 +53,21 @@ modules:
     build-options:
       cflags:
         -DSQLITE_HAS_CODEC
-        -DSQLITE_EXTRA_INIT=sqlcipher_extra_init
-        -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown
-        -SQLITE_THREADSAFE=1
+# note 4.9.0 does not create libsqlcipher.a only libsql.a
+# cflags required for 4.9
+#        -DSQLITE_EXTRA_INIT=sqlcipher_extra_init
+#        -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown
+#        -SQLITE_THREADSAFE=1
       ldflags: -lcrypto
 #    dependencies:
 #      - name: tcl
 #        type: library
     sources:
       - type: archive
-        url: https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.9.0.tar.gz
-        sha256: 91936630ce58a9979de3136bd5292535ee0c0b2d8e901c483335ac4fb2be4185
+        url: https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.6.1.tar.gz
+        sha256: d8f9afcbc2f4b55e316ca4ada4425daf3d0b4aab25f45e11a802ae422b9f53a3
+#        url: https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.9.0.tar.gz
+#        sha256: 91936630ce58a9979de3136bd5292535ee0c0b2d8e901c483335ac4fb2be4185
     cleanup:
       - /bin
 
