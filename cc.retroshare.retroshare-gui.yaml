@@ -122,19 +122,7 @@ modules:
         sha256: 45657e20a02417e4d874a7861c7e3fc00cd03f83344bd20f4c894483a7336b4c
 
   # retroshare dependeny for autologin
-  - name:
-    - shared-modules/libsecret/libsecret-0.21.6
-
-  # retroshare dependeny for autologin
-  - name: qtkeychain
-    buildsystem: cmake-ninja
-    sources:
-      - type: git
-        url: https://github.com/frankosterfeld/qtkeychain.git
-        tag: '0.15.0'
-    config-opts:
-      - -DBUILD_SHARED_LIBS=OFF
-      - -DBUILD_TEST_APPLICATION=OFF
+  - shared-modules/libsecret/libsecret.json
 
   - name: retroshare-gui
     buildsystem: qmake
