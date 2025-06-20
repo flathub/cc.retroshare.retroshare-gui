@@ -1,6 +1,6 @@
 app-id: cc.retroshare.retroshare-gui
 runtime: org.kde.Platform
-runtime-version: "5.15"
+runtime-version: "5.15-24.08"
 sdk: org.kde.Sdk
 command: retroshare
 finish-args:
@@ -28,61 +28,85 @@ rename-desktop-file: retroshare.desktop
 rename-icon: retroshare
 
 modules:
+  # sqlcipher build dep
+  - name: tcl
+    buildsystem: autotools
+    subdir: unix
+    sources:
+      - type: archive
+        url: https://sourceforge.net/projects/tcl/files/Tcl/8.6.16/tcl8.6.16-src.tar.gz
+        sha256: 91cb8fa61771c63c262efb553059b7c7ad6757afa5857af6265e4b0bdc2a14a5
+    cleanup:
+      - /bin
+      - /lib
 
-# sqlcipher build dep
-- name: tcl
-  buildsystem: autotools
-  subdir: unix
-  sources:
-  - type: archive
-    url: https://sourceforge.net/projects/tcl/files/Tcl/8.6.11/tcl8.6.11-src.tar.gz
-    sha256: 8c0486668586672c5693d7d95817cb05a18c5ecca2f40e2836b9578064088258
-  cleanup:
-  - /bin
-  - /lib
+  # retroshare dep
+  - name: sqlcipher
+    skip-arches:
+      - aarch64
+    buildsystem: autotools
+    config-opts:
+      - --with-tempstore=yes
+      - --disable-tcl
+#      - --enable-shared
+#      - --enable-static
+    build-options:
+      cflags:
+        -DSQLITE_HAS_CODEC
+# note 4.9.0 does not create libsqlcipher.a only libsql.a
+# cflags required for 4.9
+#        -DSQLITE_EXTRA_INIT=sqlcipher_extra_init
+#        -DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown
+#        -SQLITE_THREADSAFE=1
+      ldflags: -lcrypto
+#    dependencies:
+#      - name: tcl
+#        type: library
+    sources:
+      - type: archive
+        url: https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.6.1.tar.gz
+        sha256: d8f9afcbc2f4b55e316ca4ada4425daf3d0b4aab25f45e11a802ae422b9f53a3
+#        url: https://github.com/sqlcipher/sqlcipher/archive/refs/tags/v4.9.0.tar.gz
+#        sha256: 91936630ce58a9979de3136bd5292535ee0c0b2d8e901c483335ac4fb2be4185
+    cleanup:
+      - /bin
+
+  # retroshare dep
+  - name: miniupnpc
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DUPNPC_BUILD_STATIC=FALSE
+      - -DUPNPC_BUILD_SHARED=TRUE
+      - -DUPNPC_BUILD_TESTS=FALSE
+      - -DUPNPC_BUILD_SAMPLE=FALSE
+    cleanup:
+      - /include
+      - /share/doc
+    sources:
+      - type: archive
+        url: http://miniupnp.free.fr/files/miniupnpc-2.2.5.tar.gz
+        sha256: 38acd5f4602f7cf8bcdc1ec30b2d58db2e9912e5d9f5350dd99b06bfdffb517c
+
+  # tor dep
+  - name: libevent
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz
+        sha256: 92e6de1be9ec176428fd2367677e61ceffc2ee1cb119035037a27d346b0403bb
 
 # retroshare dep
-- name: sqlcipher
-  skip-arches:
-    - aarch64
-  buildsystem: autotools
-  config-opts:
-  - --enable-tempstore=yes
-  - --disable-tcl
-  build-options:
-    cflags: -DSQLITE_HAS_CODEC
-    ldflags: -lcrypto
-  sources:
-  - type: archive
-    url: https://github.com/sqlcipher/sqlcipher/archive/v4.4.3.tar.gz
-    sha256: b8df69b998c042ce7f8a99f07cf11f45dfebe51110ef92de95f1728358853133
-  cleanup:
-  - /bin
+  - name: tor
+    buildsystem: autotools
+#    dependencies:
+#      - name: libevent
+#        type: library
+    sources:
+      - type: archive
+        url: https://dist.torproject.org/tor-0.4.8.16.tar.gz
+        sha256: 6540dd377a120fb8e7d27530aa3b7ff72a0fa5b4f670fe1d64c987c1cfd390cb
 
-# retroshare dep
-- name: miniupnpc
-  buildsystem: cmake-ninja
-  config-opts:
-    - -DUPNPC_BUILD_STATIC=FALSE
-    - -DUPNPC_BUILD_SHARED=TRUE
-    - -DUPNPC_BUILD_TESTS=FALSE
-    - -DUPNPC_BUILD_SAMPLE=FALSE
-  cleanup:
-    - /include
-    - /share/doc
-  sources:
-    - type: archive
-      url: http://miniupnp.free.fr/files/miniupnpc-2.1.20190625.tar.gz
-      sha256: 8723f5d7fd7970de23635547700878cd29a5c2bb708b5e5475b2d1d2510317fb
-
-# tor dep
-- name: libevent
-  buildsystem: autotools
-  sources:
-  - type: archive
-    url: https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz
-    sha256: 92e6de1be9ec176428fd2367677e61ceffc2ee1cb119035037a27d346b0403bb
-
+<<<<<<< HEAD
 # retroshare dep
 - name: tor
   buildsystem: autotools
@@ -90,45 +114,63 @@ modules:
   - type: archive
     url: https://dist.torproject.org/tor-0.4.8.16.tar.gz
     sha256: 6540dd377a120fb8e7d27530aa3b7ff72a0fa5b4f670fe1d64c987c1cfd390cb
+=======
+  # retroshare dep
+  - name: rapidjson
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DRAPIDJSON_BUILD_DOC=OFF
+      - -DRAPIDJSON_BUILD_EXAMPLES=OFF
+      - -DRAPIDJSON_BUILD_TESTS=OFF
+    cleanup:
+      - /include
+      - /share/doc
+    sources:
+      - type: archive
+        url: https://github.com/Tencent/rapidjson/archive/refs/heads/master.zip
+        sha256: 45657e20a02417e4d874a7861c7e3fc00cd03f83344bd20f4c894483a7336b4c
 
-# retroshare dep
-- name: rapidjson
-  buildsystem: cmake-ninja
-  config-opts:
-    - -DRAPIDJSON_BUILD_DOC=OFF
-    - -DRAPIDJSON_BUILD_EXAMPLES=OFF
-    - -DRAPIDJSON_BUILD_TESTS=OFF
-  cleanup:
-    - /include
-    - /share/doc
-  sources:
-    - type: archive
-      url: https://github.com/Tencent/rapidjson/archive/v1.1.0.tar.gz
-      sha256: bf7ced29704a1e696fbccf2a2b4ea068e7774fa37f6d7dd4039d0787f8bed98e
-    
-- name: retroshare-gui
-  buildsystem: qmake
-  config-opts:
-    - CONFIG-=debug
-    - CONFIG+=release
-    - RS_UPNP_LIB=miniupnpc
-  build-options:
-    arch:
-      aarch64:
-        config-opts:
-          - CONFIG-=debug
-          - CONFIG+=release
-          - CONFIG+=no_sqlcipher
-          - RS_UPNP_LIB=miniupnpc
-  sources:
-  - type: git
-    url: https://github.com/RetroShare/RetroShare.git
-    tag: v0.6.6
-    commit: 751fffc30f957425b1581c3aefaacf1959a8869f
-  - type: file
-    path: cc.retroshare.retroshare-gui.appdata.xml
-  - type: patch
-    path: 0001-adapt-desktop-file.patch
-  - type: shell
-    commands:
-      - install -Dm644 cc.retroshare.retroshare-gui.appdata.xml /app/share/appdata/cc.retroshare.retroshare-gui.appdata.xml
+  # retroshare dependeny for autologin
+  - shared-modules/libsecret/libsecret.json
+
+  - name: retroshare-gui
+    buildsystem: qmake
+    config-opts:
+      - CONFIG-=debug
+      - CONFIG+=release
+      - CONFIG+=rs_efs
+      - CONFIG+=rs_autologin
+      - CONFIG+=rs_jsonapi
+      - CONFIG+=rs_webui
+      - RS_UPNP_LIB=miniupnpc
+    build-options:
+      arch:
+        aarch64:
+          config-opts:
+            - CONFIG-=debug
+            - CONFIG+=release
+            - CONFIG+=no_sqlcipher
+            - RS_UPNP_LIB=miniupnpc
+#    dependencies:
+#      - name: miniupnpc
+#        type: library
+#      - name: rapidjson
+#        type: library
+#      - name: sqlcipher
+#        type: library
+#      - name: tor
+#        type: library
+  #      version: v4.9.0
+    sources:
+    - type: git
+      url: https://github.com/RetroShare/RetroShare.git
+      tag: v0.6.7.2
+      commit: 463a25a0486557b133115147ec25e59ae59e476c
+      disable-shallow-clone: true
+    - type: file
+      path: cc.retroshare.retroshare-gui.appdata.xml
+    - type: patch
+      path: 0001-adapt-desktop-file.patch
+    - type: shell
+      commands:
+        - install -Dm644 cc.retroshare.retroshare-gui.appdata.xml /app/share/appdata/cc.retroshare.retroshare-gui.appdata.xml
