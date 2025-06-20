@@ -7,7 +7,7 @@ index efc73dd6b..329ed6dc5 100644
  Name=RetroShare
  Comment=Securely communicate with your friends
 -Exec=/usr/bin/retroshare %U
-+Exec=retroshare %U
++Exec=/app/bin/retroshare -t /app/bin/tor %U
  Icon=/usr/share/pixmaps/retroshare.xpm
  Terminal=false
  Type=Application

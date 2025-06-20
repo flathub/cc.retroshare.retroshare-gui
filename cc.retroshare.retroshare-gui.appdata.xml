@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2025 RetroShare -->
 <component type="desktop-application">
   <id>cc.retroshare.retroshare-gui</id>
   <metadata_license>FSFAP</metadata_license>
+  <developer id="cc.retroshare">
+    <name>Cyril Soler</name>
+  </developer>
   <project_license>AGPL-3.0-only and LGPL-3.0-or-later and GPL-3.0-or-later</project_license>
   <name>RetroShare-gui</name>
   <summary>Secure communication for everyone</summary>
@@ -20,18 +24,28 @@
       There are no hidden costs, no ads and no terms of service.
     </p>
   </description>
+  <launchable type="desktop-id">cc.retroshare.retroshare-gui.desktop</launchable>
   <screenshots>
     <screenshot type="default">
       <caption>Broadcast chat</caption>
-      <image>http://retroshare.cc/img/rs1.png</image>
+      <image>https://retroshare.cc/img/rs1.png</image>
     </screenshot>
   </screenshots>
   <kudos>
     <kudo>ModernToolkit</kudo>
   </kudos>
-  <url type="homepage">http://retroshare.cc/</url>
-  <updatecontact>contact_at_retroshare.cc</updatecontact>
+  <url type="contribute">https://github.com/RetroShare</url>
+  <url type="homepage">https://retroshare.cc/</url>
   <releases>
+    <release date="2023-11-28" version="0.6.7.2">
+      <description>
+      <p>Release description</p>
+        <ul>
+          <li>New stuff and a lot of bug fixes.</li>
+          <li>New Tor version.</li>
+        </ul>
+      </description>
+    </release>
     <release date="2021-03-23" version="0.6.6"/>
     <release date="2019-02-12" version="0.6.5"/>
   </releases>
