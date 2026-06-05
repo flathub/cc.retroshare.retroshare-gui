@@ -155,8 +155,8 @@ modules:
     sources:
     - type: git
       url: https://github.com/RetroShare/RetroShare.git
-      tag: v0.6.7.2
-      commit: 463a25a0486557b133115147ec25e59ae59e476c
+      tag: v0.6.7.3
+      commit: 0caf8e79dbc941fd16eaa15d6d8a20885f5f005e
       disable-shallow-clone: true
     - type: file
       path: cc.retroshare.retroshare-gui.appdata.xml
