@@ -124,6 +124,19 @@ modules:
   # retroshare dependeny for autologin
   - shared-modules/libsecret/libsecret.json
 
+  # restbed dep (rs_jsonapi), header-only standalone ASIO.
+  # Keep < 1.33: restbed still includes asio/io_service.hpp, removed in 1.33.
+  - name: asio
+    buildsystem: simple
+    build-commands:
+      - install -d /app/include
+      - cp -r asio/include/asio.hpp asio/include/asio /app/include/
+    sources:
+      - type: git
+        url: https://github.com/chriskohlhoff/asio.git
+        tag: asio-1-30-2
+        commit: 12e0ce9e0500bf0f247dbd1ae894272656456079
+
   - name: retroshare-gui
     buildsystem: qmake
     config-opts:
@@ -133,35 +146,51 @@ modules:
       - CONFIG+=rs_autologin
       - CONFIG+=rs_jsonapi
       - CONFIG+=rs_webui
+      # master defaults to librnp (needs Botan, not in the KDE runtime);
+      # keep the bundled OpenPGP-SDK like v0.6.7.x did
+      - CONFIG+=rs_no_rnplib
+      # build the plugins/ subdir (we limit it to RetroChess below)
+      - CONFIG+=retroshare_plugins
       - RS_UPNP_LIB=miniupnpc
     build-options:
+      env:
+        # restbed's Findasio.cmake only hints /usr/include and /usr/local/include
+        CMAKE_INCLUDE_PATH: /app/include
       arch:
         aarch64:
           config-opts:
             - CONFIG-=debug
             - CONFIG+=release
             - CONFIG+=no_sqlcipher
+            - CONFIG+=rs_no_rnplib
+            - CONFIG+=retroshare_plugins
             - RS_UPNP_LIB=miniupnpc
-#    dependencies:
-#      - name: miniupnpc
-#        type: library
-#      - name: rapidjson
-#        type: library
-#      - name: sqlcipher
-#        type: library
-#      - name: tor
-#        type: library
-  #      version: v4.9.0
     sources:
+    # RetroChess tracks RetroShare master (rschats.h / rsChats API, added
+    # Dec 2025), so it cannot be built against the v0.6.7.3 tag.
     - type: git
       url: https://github.com/RetroShare/RetroShare.git
-      tag: v0.6.7.3
-      commit: 0caf8e79dbc941fd16eaa15d6d8a20885f5f005e
+      commit: 662406b9b39de398dcd13e0c4fda931a9fcb7c45
       disable-shallow-clone: true
+    - type: git
+      url: https://github.com/RetroShare/RetroChess.git
+      commit: f41b3e723d1fb778bc8950c731402bc11cffaac9
+      dest: plugins/RetroChess
+    # Only build RetroChess (VOIP needs ffmpeg/OpenCV, FeedReader needs
+    # extra deps); add them back here if you want them shipped too.
+    - type: shell
+      commands:
+        - printf 'TEMPLATE = subdirs\nSUBDIRS += RetroChess\n' > plugins/plugins.pro
+        # The bundled 2016 RapidJSON has a copy-assignment that writes a const
+        # member; GCC 14 rejects it. Drop it like upstream RapidJSON did.
+        - sed -i '/GenericStringRef& operator=(const GenericStringRef& rhs) { s = rhs.s; length = rhs.length; }/d'
+          supportlibs/rapidjson/include/rapidjson/document.h
+        - "! grep -q 'GenericStringRef& operator=' supportlibs/rapidjson/include/rapidjson/document.h"
     - type: file
       path: cc.retroshare.retroshare-gui.appdata.xml
     - type: patch
       path: 0001-adapt-desktop-file.patch
-    - type: shell
-      commands:
-        - install -Dm644 cc.retroshare.retroshare-gui.appdata.xml /app/share/appdata/cc.retroshare.retroshare-gui.appdata.xml
+    post-install:
+      - install -Dm644 cc.retroshare.retroshare-gui.appdata.xml /app/share/appdata/cc.retroshare.retroshare-gui.appdata.xml
+      # RetroShare loads plugins from $PREFIX/lib/retroshare/extensions6
+      - test -e /app/lib/retroshare/extensions6/libRetroChess.so
